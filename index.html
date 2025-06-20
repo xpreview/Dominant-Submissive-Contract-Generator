@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dominant/Submissive Contract Generator</title>
+  <style>
+    body {
+      font-family: Georgia, serif;
+      max-width: 800px;
+      margin: auto;
+      padding: 40px;
+      line-height: 1.6;
+    }
+    h1 {
+      text-align: center;
+    }
+    .field {
+      margin-bottom: 20px;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      font-size: 16px;
+    }
+    button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      background: #333;
+      color: #fff;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #555;
+    }
+    #contractContainer {
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Dominant/Submissive Contract</h1>
+
+  <div class="field">
+    <label>Your Dominant Name:</label>
+    <input type="text" id="dominantName" value="Mr. Dutta">
+  </div>
+
+  <div class="field">
+    <label>Submissive's Name:</label>
+    <input type="text" id="submissiveName" value="Submissive">
+  </div>
+
+  <button onclick="generateContract()">Generate Contract</button>
+  <button onclick="downloadPDF()">Download as PDF</button>
+
+  <div id="contractContainer"></div>
+
+  <!-- Load html2pdf -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+  <script>
+    const template = `
+<h2>DOMINANT/SUBMISSIVE CONTRACT</h2>
+<p>This Contract is entered into on this ___ day of ___, 2025 (“Commencement Date”),</p>
+<p>Between:</p>
+<p><b>[DOMINANT_NAME]</b> (hereafter referred to as the “Dominant” or “[DOMINANT_NAME]”), an adult Indian citizen, residing at ______________________,</p>
+<p>AND</p>
+<p><b>[SUBMISSIVE_NAME]</b> (hereafter referred to as the “Submissive”), an adult consenting party, residing at ______________________.</p>
+
+<h2>1. PURPOSE</h2>
+<p>1.1 The Parties enter into this consensual Dominant/Submissive relationship to explore the Dominant’s control over the Submissive in personal and intimate contexts.</p>
+<p>1.2 This is a private arrangement; sexual clauses are morally binding but not legally enforceable. Confidentiality and civil clauses are enforceable under Indian law.</p>
+
+<h2>2. TERM AND TERMINATION</h2>
+<p>2.1 Valid for three (3) calendar months from the Commencement Date.<br>
+2.2 Either party may terminate with written notice at any time.<br>
+2.3 Breach of fundamental terms (Sections 3, 4, 6, 8, 10-14) renders this Contract void.</p>
+
+<h2>3. ROLES AND RESPONSIBILITIES</h2>
+<p><b>[DOMINANT_NAME]</b> agrees to:</p>
+<ul>
+  <li>Guide, train, and discipline the Submissive.</li>
+  <li>Decide on activities, punishments, attire, conduct, and permissions.</li>
+  <li>Ensure the Submissive’s health and safety at all times.</li>
+  <li>Cover agreed travel, attire, or related expenses.</li>
+  <li>May restrain, bind, or confine the Submissive as appropriate within limits.</li>
+</ul>
+<p>The Submissive agrees to:</p>
+<ul>
+  <li>Obey all instructions given by [DOMINANT_NAME] immediately and without hesitation.</li>
+  <li>Present herself at agreed times and locations.</li>
+  <li>Eat properly and maintain good health and hygiene.</li>
+  <li>Wear only clothing and adornments approved or provided by [DOMINANT_NAME].</li>
+  <li>Maintain grooming (waxing, shaving) as instructed.</li>
+  <li>Not touch or pleasure herself without permission.</li>
+  <li>Be available Friday evening to Sunday afternoon, or as otherwise agreed.</li>
+</ul>
+
+<h2>4. LIMITATIONS</h2>
+<p>4.1 The Submissive consents to mild punishments or corrective measures [DOMINANT_NAME] deems fit.<br>
+4.2 Discipline must not cause permanent harm or violate Indian law.<br>
+4.3 Either party may terminate in case of serious illness, accident, or unforeseen medical risk.</p>
+
+<h2>5. DISCIPLINE</h2>
+<p>5.1 [DOMINANT_NAME] may administer discipline, including light spanking, light bondage, or other mild corrective acts.<br>
+5.2 The Submissive shall accept such discipline without resistance or complaint.<br>
+5.3 All discipline must remain safe and limited to mild discomfort only.</p>
+
+<h2>6. RULES</h2>
+<ol>
+  <li>Obey instructions from [DOMINANT_NAME] immediately.</li>
+  <li>Eat balanced meals; avoid unhealthy snacks.</li>
+  <li>Sleep at least 7 hours daily when not serving.</li>
+  <li>Wear only clothing approved by [DOMINANT_NAME].</li>
+  <li>Maintain personal grooming and hygiene.</li>
+  <li>Be available and present as scheduled.</li>
+  <li>No self-pleasure without explicit permission.</li>
+  <li>Address [DOMINANT_NAME] as “Sir,” “Master,” or as preferred.</li>
+  <li>Maintain respectful demeanor at all times.</li>
+  <li>Avoid drugs, excess alcohol, and any risky behavior.</li>
+  <li>Not engage in any romantic or sexual relationship outside this arrangement.</li>
+</ol>
+
+<h2>7. CONFIDENTIALITY</h2>
+<p>7.1 The Submissive shall keep all aspects of this Contract strictly confidential.<br>
+7.2 This clause survives termination and is enforceable under Indian Contract Act.<br>
+7.3 Breach entitles [DOMINANT_NAME] to seek damages.</p>
+
+<h2>8. HEALTH & SAFETY</h2>
+<p>8.1 [DOMINANT_NAME] ensures all implements used are clean, hygienic, and safe.<br>
+8.2 The Submissive must promptly disclose discomfort or health issues.<br>
+8.3 Discipline shall not result in medical emergencies or permanent marks.</p>
+
+<h2>9. GOVERNING LAW</h2>
+<p>9.1 This Contract shall be governed by Indian Contract Act, 1872.<br>
+9.2 Unlawful or forced sexual acts are void and unenforceable.<br>
+9.3 Valid clauses (confidentiality, property use, mutual expenses) may be enforced civilly.</p>
+
+<h2>10. FREE CONSENT</h2>
+<p>10.1 Both Parties declare they enter this Contract freely, willingly, and without threat or coercion.<br>
+10.2 Either Party may withdraw consent to any act at any time.</p>
+
+<h2>11. SAFE DISCIPLINE</h2>
+<p>11.1 Discipline is mild, safe, and consensual; no severe injury, no permanent marks, and no acts that may cause medical emergencies.<br>
+11.2 [DOMINANT_NAME] agrees to exercise due care and caution.</p>
+
+<h2>12. NO RECORDING</h2>
+<p>12.1 Neither Party shall record, film, or photograph any acts under this Contract without prior written consent.<br>
+12.2 Violation entitles the other Party to seek damages or file a complaint under the Indian IT Act.</p>
+
+<h2>13. ANTI-DEFAMATION</h2>
+<p>13.1 Neither Party shall defame, blackmail, or misrepresent the other in any forum (online or offline).</p>
+
+<h2>14. DISPUTE RESOLUTION</h2>
+<p>14.1 Any dispute shall first be settled amicably.<br>
+14.2 If unresolved, Parties may refer the matter to arbitration under Indian Arbitration and Conciliation Act, 1996.</p>
+
+<h3>IN WITNESS WHEREOF, the Parties have signed this Contract on this ___ day of ___, 2025.</h3>
+<p>______________________________<br>[DOMINANT_NAME] — Dominant</p>
+<p>______________________________<br>[SUBMISSIVE_NAME]</p>
+<p>______________________________<br>Witness 1 (Name, Signature, ID)</p>
+<p>______________________________<br>Witness 2 (Name, Signature, ID)</p>
+`;
+
+    function generateContract() {
+      const dominant = document.getElementById('dominantName').value || 'Mr. Dutta';
+      const submissive = document.getElementById('submissiveName').value || 'Submissive';
+      const filled = template.replace(/\[DOMINANT_NAME\]/g, dominant).replace(/\[SUBMISSIVE_NAME\]/g, submissive);
+      document.getElementById('contractContainer').innerHTML = filled;
+    }
+
+    function downloadPDF() {
+      const element = document.getElementById('contractContainer');
+      const opt = {
+        margin: 0.5,
+        filename: 'Dominant_Submissive_Contract.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' },
+        pagebreak: { mode: ['css', 'legacy'] }
+      };
+      html2pdf().from(element).set(opt).toPdf().get('pdf').then(function (pdf) {
+        const totalPages = pdf.internal.getNumberOfPages();
+        for (let i = 1; i <= totalPages; i++) {
+          pdf.setPage(i);
+          pdf.setFontSize(10);
+          pdf.text(`Page ${i} of ${totalPages}`, pdf.internal.pageSize.getWidth() - 50, pdf.internal.pageSize.getHeight() - 10);
+        }
+      }).save();
+    }
+  </script>
+
+</body>
+</html>
