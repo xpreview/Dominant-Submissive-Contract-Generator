@@ -45,7 +45,7 @@
 
   <div class="field">
     <label>Your Dominant Name:</label>
-    <input type="text" id="dominantName" value="Mr. Dutta">
+    <input type="text" id="dominantName" value="INSOMNIA">
   </div>
 
   <div class="field">
@@ -54,7 +54,7 @@
   </div>
 
   <button onclick="generateContract()">Generate Contract</button>
-  <button onclick="downloadPDF()">Download as PDF</button>
+  <button onclick="downloadPDF()">Download Legal Copy</button>
 
   <div id="contractContainer"></div>
 
@@ -88,6 +88,9 @@
   <li>Cover agreed travel, attire, or related expenses.</li>
   <li>May restrain, bind, or confine the Submissive as appropriate within limits.</li>
 </ul>
+
+<p> ឵឵ </p>
+
 <p>The Submissive agrees to:</p>
 <ul>
   <li>Obey all instructions given by [DOMINANT_NAME] immediately and without hesitation.</li>
@@ -151,6 +154,8 @@
 <p>12.1 Neither Party shall record, film, or photograph any acts under this Contract without prior written consent.<br>
 12.2 Violation entitles the other Party to seek damages or file a complaint under the Indian IT Act.</p>
 
+<p> ឵឵ </p>
+
 <h2>13. ANTI-DEFAMATION</h2>
 <p>13.1 Neither Party shall defame, blackmail, or misrepresent the other in any forum (online or offline).</p>
 
@@ -161,12 +166,12 @@
 <h3>IN WITNESS WHEREOF, the Parties have signed this Contract on this ___ day of ___, 2025.</h3>
 <p>______________________________<br>[DOMINANT_NAME] — Dominant</p>
 <p>______________________________<br>[SUBMISSIVE_NAME]</p>
-<p>______________________________<br>Witness 1 (Name, Signature, ID)</p>
-<p>______________________________<br>Witness 2 (Name, Signature, ID)</p>
+<p>______________________________<br>Witness 1 (Name, Signature)</p>
+<p>______________________________<br>Witness 2 (Name, Signature)</p>
 `;
 
     function generateContract() {
-      const dominant = document.getElementById('dominantName').value || 'Mr. Dutta';
+      const dominant = document.getElementById('dominantName').value || 'INSOMNIA';
       const submissive = document.getElementById('submissiveName').value || 'Submissive';
       const filled = template.replace(/\[DOMINANT_NAME\]/g, dominant).replace(/\[SUBMISSIVE_NAME\]/g, submissive);
       document.getElementById('contractContainer').innerHTML = filled;
